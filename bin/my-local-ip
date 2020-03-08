@@ -1,0 +1,4 @@
+#! /bin/sh
+ipaddr=`ifconfig en0 inet | tail -n 1 | gawk '/inet \w+/ { print $2 }'`
+echo $ipaddr | tr -ds '\n' '\s' | pbcopy
+echo $ipaddr

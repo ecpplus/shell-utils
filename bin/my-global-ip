@@ -1,0 +1,4 @@
+#! /bin/sh
+ipaddr=`curl -s https://ip.ecp.plus/`
+echo $ipaddr | tr -ds '\n' '\s' | pbcopy
+echo $ipaddr

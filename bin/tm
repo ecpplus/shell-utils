@@ -1,0 +1,3 @@
+#! /bin/sh
+socket_name=`pwd | gawk 'gsub("/", "__") gsub("\\W", "-")'`
+tmux a -t $socket_name || tmux new -s $socket_name
