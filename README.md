@@ -2,12 +2,12 @@
 
 ## bin
 
-### mylocalip
+### localip
 
 To show `en0` local IP address and store the IP address to your clipboard by pbcopy.
 This requires `gawk` (`brew install gawk`)
 
-### myglobalip
+### globalip
 
 This script requests `GET https://ip.ecp.plus` which returns request IP address.
 And show the IP address and store it to your clipboard.
