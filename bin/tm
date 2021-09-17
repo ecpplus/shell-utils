@@ -1,3 +1,3 @@
 #! /bin/sh
-socket_name=`pwd | cut -f 4- -d "/" | gawk '{ gsub("\\\.", "_"); print }'`
-tmux a -t $socket_name || tmux new -s $socket_name
+socket_name=`pwd | cut -f 4- -d "/" | gawk '{ gsub("\\\.", "_"); gsub("/", "_"); print }'`
+tmux -L $socket_name attach || tmux -L $socket_name new
