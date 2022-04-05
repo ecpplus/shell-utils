@@ -26,18 +26,22 @@ instances = result["Reservations"].as_a.flat_map do |reservation|
       name = name_tag.not_nil!.dig("Value").as_s
     end
 
-    ip_addr = instance["PublicIpAddress"]?
-    if name_tag != nil && ip_addr != nil
+    public_ip_addr = instance["PublicIpAddress"]?
+    private_ip_addr = instance["PrivateIpAddress"]?
+    if name_tag != nil
       {
         name:              name,
-        public_ip_address: ip_addr ? ip_addr.not_nil!.as_s : "",
+        public_ip_address: public_ip_addr ? public_ip_addr.not_nil!.as_s : "",
+        private_ip_address: private_ip_addr ? private_ip_addr.not_nil!.as_s : "",
       }
     end
   end
 end.select { |h| h != nil }.sort_by { |h| h.not_nil![:name] }
 
 max_name_length = instances.max_of { |h| h.not_nil!.[:name].not_nil!.size }
+max_public_ip_length = instances.max_of { |h| h.not_nil!.[:public_ip_address].not_nil!.size }
+max_private_ip_length = instances.max_of { |h| h.not_nil!.[:public_ip_address].not_nil!.size }
 
 instances.each do |h|
-  puts "%#{max_name_length}s    %s" % [h.not_nil![:name], h.not_nil![:public_ip_address]]
+  puts "%#{max_name_length}s   %#{max_public_ip_length}s   %#{max_private_ip_length}s" % [h.not_nil![:name], h.not_nil![:public_ip_address], h.not_nil![:private_ip_address]]
 end
