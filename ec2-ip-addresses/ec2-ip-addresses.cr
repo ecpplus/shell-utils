@@ -1,12 +1,18 @@
 require "process"
 require "json"
 
+aws_profile = nil
+aws_profile = ARGV[0] if 0 < ARGV.size
+
 stdout = IO::Memory.new
 stderr = IO::Memory.new
 
+aws_command_args = %w|ec2 describe-instances --filters --region ap-northeast-1|
+aws_command_args += ["--profile", aws_profile] if aws_profile
+
 status = Process.run(
   "aws",
-  %w|ec2 describe-instances --filters --region ap-northeast-1|,
+  aws_command_args,
   output: stdout,
   error: stderr,
 )
